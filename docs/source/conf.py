@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# metlog-cef documentation build configuration file, created by
+# heka-cef documentation build configuration file, created by
 # sphinx-quickstart on Fri Mar 30 07:26:19 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'metlog-cef'
+project = u'heka-cef'
 copyright = u'2012, Victor Ng'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -162,7 +162,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'metlog-cefdoc'
+htmlhelp_basename = 'heka-cefdoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -181,7 +181,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'metlog-cef.tex', u'metlog-cef Documentation',
+  ('index', 'heka-cef.tex', u'heka-cef Documentation',
    u'Victor Ng', 'manual'),
 ]
 
@@ -211,7 +211,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'metlog-cef', u'metlog-cef Documentation',
+    ('index', 'heka-cef', u'heka-cef Documentation',
      [u'Victor Ng'], 1)
 ]
 
@@ -225,8 +225,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'metlog-cef', u'metlog-cef Documentation', u'Victor Ng',
-   'metlog-cef', 'One line description of project.', 'Miscellaneous'),
+  ('index', 'heka-cef', u'heka-cef Documentation', u'Victor Ng',
+   'heka-cef', 'One line description of project.', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -242,7 +242,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'metlog-cef'
+epub_title = u'heka-cef'
 epub_author = u'Victor Ng'
 epub_publisher = u'Victor Ng'
 epub_copyright = u'2012, Victor Ng'
