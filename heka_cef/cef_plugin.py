@@ -61,10 +61,10 @@ def config_plugin(config):
     """
     CEF requires no special configuration
     """
-    syslog_options = config.pop('syslog_options', None)
-    syslog_facility = config.pop('syslog_facility', None)
-    syslog_ident = config.pop('syslog_ident', None)
-    syslog_priority = config.pop('syslog_priority', None)
+    syslog_options = config.pop('syslog_options', "")
+    syslog_facility = config.pop('syslog_facility', "")
+    syslog_ident = config.pop('syslog_ident', "")
+    syslog_priority = config.pop('syslog_priority', "")
 
     check_config(syslog_options, syslog_facility, syslog_ident,
             syslog_priority)

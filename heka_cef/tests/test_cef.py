@@ -155,3 +155,18 @@ class TestExtraConfig(unittest.TestCase):
         syslog_options=PIDBAD
         """
         client_from_text_config(cfg_txt, 'heka')
+
+    def test_missing_syslog_options_not_null(self):
+        cfg_txt = """
+        [heka]
+        sender_class=heka.senders.DebugCaptureSender
+
+        [heka_plugin_cef]
+        provider=heka_cef.cef_plugin:config_plugin
+        """
+        client = client_from_text_config(cfg_txt, 'heka')
+        expected = {'syslog_priority': '',
+                    'syslog_ident': '',
+                    'syslog_facility': '',
+                    'syslog_options': '',}
+        eq_(client.cef.cef_meta, expected)
