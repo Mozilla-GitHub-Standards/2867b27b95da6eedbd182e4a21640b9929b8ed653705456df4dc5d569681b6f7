@@ -134,7 +134,6 @@ class TestExtraConfig(unittest.TestCase):
 
         [heka_plugin_cef]
         provider=heka_cef.cef_plugin:config_plugin
-        syslog_options=PID,NDELAY
         syslog_facility=KERN
         syslog_ident=some_identifier
         syslog_priority=EMERG
@@ -142,21 +141,8 @@ class TestExtraConfig(unittest.TestCase):
         client = client_from_text_config(cfg_txt, 'heka')
         expected = {'syslog_priority': 'EMERG',
                     'syslog_ident': 'some_identifier',
-                    'syslog_facility': 'KERN',
-                    'syslog_options': 'PID,NDELAY'}
+                    'syslog_facility': 'KERN'}
         eq_(client.cef.cef_meta, expected)
-
-    @raises(InvalidArgumentError)
-    def test_bad_option(self):
-        cfg_txt = """
-        [heka]
-        stream_class = heka.streams.DebugCaptureStream
-
-        [heka_plugin_cef]
-        provider=heka_cef.cef_plugin:config_plugin
-        syslog_options=PIDBAD
-        """
-        client_from_text_config(cfg_txt, 'heka')
 
     def test_missing_syslog_options_not_null(self):
         cfg_txt = """
@@ -169,6 +155,5 @@ class TestExtraConfig(unittest.TestCase):
         client = client_from_text_config(cfg_txt, 'heka')
         expected = {'syslog_priority': '',
                     'syslog_ident': '',
-                    'syslog_facility': '',
-                    'syslog_options': '',}
+                    'syslog_facility': '',}
         eq_(client.cef.cef_meta, expected)

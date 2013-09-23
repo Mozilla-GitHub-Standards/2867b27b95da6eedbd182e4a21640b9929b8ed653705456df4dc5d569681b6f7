@@ -16,8 +16,7 @@ the Heka server. ::
     provider=heka_cef.cef_plugin:config_plugin
 
 The CEF plugin provides some optional configuration settings for 
-setting the syslog options, syslog facility, syslog ident and syslog
-priority.
+setting the syslog facility, syslog ident and syslog priority.
 
 By default, the syslog facility will be set to LOCAL4.
 
@@ -52,21 +51,16 @@ Valid priority settings are :
   * INFO
   * DEBUG
 
-Syslog options can be set using a comma delimited list with the
-following options :
+Syslog options are not supported as they do not make sense in the
+context of running a hekad daemon.  The PID is always captured in a
+Heka message in the PID field.
 
-  * PID
-  * CONS
-  * NDELAY
-  * NOWAIT
-  * LOG_PERROR
 
 Here is one sample configuration demonstrating using all available
 configuration keys ::
 
     [heka_plugin_cef]
     provider=heka_cef.cef_plugin:config_plugin
-    syslog_options=NDELAY,PID
     syslog_facility=KERN
     syslog_ident=my_funny_app
     syslog_priority=EMERG
