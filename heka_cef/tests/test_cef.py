@@ -13,8 +13,8 @@
 # ***** END LICENSE BLOCK *****
 from heka.config import client_from_text_config
 import heka_cef
+from heka.tests.helpers import decode_message
 import unittest
-import json
 from cef import logger
 from nose.tools import raises, eq_
 from heka_cef.cef_plugin import InvalidArgumentError
@@ -27,7 +27,7 @@ class TestHeka(unittest.TestCase):
 
         cfg_txt = """
         [heka]
-        sender_class = heka.senders.DebugCaptureSender
+        stream_class = heka.streams.DebugCaptureStream
 
         [heka_plugin_cef]
         provider=heka_cef.cef_plugin:config_plugin
@@ -60,13 +60,15 @@ class TestHeka(unittest.TestCase):
     def _log(self, name, severity, *args, **kw):
         # Capture the output from heka and clear the internal debug buffer
         self.client.cef(name, severity, self.environ, self.config, *args, **kw)
-        msgs = self.client.sender.msgs
+        msgs = self.client.stream.msgs
 
-        msg = json.loads(msgs[0])
+        # Need to strip out protobuf header of 8 bytes
+        h, msg = decode_message(msgs[0])
+
         msgs.clear()
         # We only care about the CEF payload
-        assert msg['type'] == 'cef'
-        return msg['payload']
+        assert msg.type == 'cef'
+        return msg.payload
 
     def test_cef_logging(self):
         # should not fail
@@ -128,7 +130,7 @@ class TestExtraConfig(unittest.TestCase):
 
         cfg_txt = """
         [heka]
-        sender_class=heka.senders.DebugCaptureSender
+        stream_class = heka.streams.DebugCaptureStream
 
         [heka_plugin_cef]
         provider=heka_cef.cef_plugin:config_plugin
@@ -148,7 +150,7 @@ class TestExtraConfig(unittest.TestCase):
     def test_bad_option(self):
         cfg_txt = """
         [heka]
-        sender_class=heka.senders.DebugCaptureSender
+        stream_class = heka.streams.DebugCaptureStream
 
         [heka_plugin_cef]
         provider=heka_cef.cef_plugin:config_plugin
@@ -159,7 +161,7 @@ class TestExtraConfig(unittest.TestCase):
     def test_missing_syslog_options_not_null(self):
         cfg_txt = """
         [heka]
-        sender_class=heka.senders.DebugCaptureSender
+        stream_class = heka.streams.DebugCaptureStream
 
         [heka_plugin_cef]
         provider=heka_cef.cef_plugin:config_plugin
