@@ -20,26 +20,12 @@ VALID_FACILITY = ['KERN', 'USER', 'MAIL', 'DAEMON', 'AUTH', 'LPR',
 VALID_PRIORITY = ['EMERG', 'ALERT', 'CRIT', 'ERR', 'WARNING',
 'NOTICE', 'INFO', 'DEBUG']
 
-VALID_OPTIONS = ['PID', 'CONS', 'NDELAY', 'NOWAIT', 'LOG_PERROR']
-
 
 class InvalidArgumentError(RuntimeError):
     pass
 
 
-def check_config(syslog_options, syslog_facility, syslog_ident,
-        syslog_priority):
-
-    if syslog_options:
-        if not isinstance(syslog_options, basestring):
-            msg = "Option should be one of: %s" % str(VALID_OPTIONS)
-            raise InvalidArgumentError(msg)
-
-        if syslog_options:
-            for opt in syslog_options.split(','):
-                if opt not in VALID_OPTIONS:
-                    msg = "Option should be one of: %s" % str(VALID_OPTIONS)
-                    raise InvalidArgumentError(msg)
+def check_config(syslog_facility, syslog_ident, syslog_priority):
 
     if syslog_facility:
         if syslog_facility not in VALID_FACILITY:
@@ -61,20 +47,17 @@ def config_plugin(config):
     """
     CEF requires no special configuration
     """
-    syslog_options = config.pop('syslog_options', "")
     syslog_facility = config.pop('syslog_facility', "")
     syslog_ident = config.pop('syslog_ident', "")
     syslog_priority = config.pop('syslog_priority', "")
 
-    check_config(syslog_options, syslog_facility, syslog_ident,
-            syslog_priority)
+    check_config(syslog_facility, syslog_ident, syslog_priority)
 
     if len(config) > 0:
         msg = "Unexpected arguments: %s" % str(config.keys())
         raise InvalidArgumentError(msg)
 
     cef_meta = {}
-    cef_meta['syslog_options'] = syslog_options
     cef_meta['syslog_facility'] = syslog_facility
     cef_meta['syslog_ident'] = syslog_ident
     cef_meta['syslog_priority'] = syslog_priority

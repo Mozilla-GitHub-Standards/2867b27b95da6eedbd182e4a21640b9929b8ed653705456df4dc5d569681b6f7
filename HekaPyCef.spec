@@ -1,10 +1,10 @@
-%define name heka-cef
-%define pythonname HekaCef
+%define name heka-py-cef
+%define pythonname HekaPyCef
 %define version 0.2
 %define unmangled_version %{version}
 %define release 0
 
-Summary: CEF plugin for heka-py
+Summary: CEF plugin for heka
 Name: %{name}
 Version: %{version}
 Release: %{release}
@@ -18,14 +18,14 @@ Vendor: Victor Ng <vng@mozilla.com>
 Requires: 
 Obsoletes:
 
-Url: https://github.com/mozilla-services/heka-cef
+Url: https://github.com/mozilla-services/heka-py-cef
 
 %description
-================================
+==================================
 CEF data capture plugin for Heka
-================================
+==================================
 
-A plugin for 'heka-py' which provides extensions to log CEF compatible
+A plugin for 'Heka' which provides extensions to log CEF compatible
 messages.
 
 %prep
