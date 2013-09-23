@@ -155,5 +155,5 @@ class TestExtraConfig(unittest.TestCase):
         client = client_from_text_config(cfg_txt, 'heka')
         expected = {'syslog_priority': '',
                     'syslog_ident': '',
-                    'syslog_facility': '',}
+                    'syslog_facility': 'LOCAL4',}
         eq_(client.cef.cef_meta, expected)

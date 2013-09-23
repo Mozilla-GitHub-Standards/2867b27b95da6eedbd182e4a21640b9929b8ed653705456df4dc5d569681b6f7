@@ -1,6 +1,7 @@
-0.3 - 2013-08-16
+0.3 - 2013-09-23
 ================
 
+- dropped syslog-options as they are not relevant for heka-py-cef
 - First official release compatible with heka 0.3
 
 

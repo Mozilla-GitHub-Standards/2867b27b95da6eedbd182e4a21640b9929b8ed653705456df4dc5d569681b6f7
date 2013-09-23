@@ -47,7 +47,7 @@ def config_plugin(config):
     """
     CEF requires no special configuration
     """
-    syslog_facility = config.pop('syslog_facility', "")
+    syslog_facility = config.pop('syslog_facility', "LOCAL4")
     syslog_ident = config.pop('syslog_ident', "")
     syslog_priority = config.pop('syslog_priority', "")
 
