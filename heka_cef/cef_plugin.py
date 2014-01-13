@@ -84,6 +84,10 @@ def config_plugin(config):
         try:
             self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
         except ValueError:
+            # Brutal brute force back into unicode. CEF lib explicitly converts
+            # unicode to UTF8, but protobuf lib barfs on UTF8, it wants
+            # unicode. Which it then proceeds to convert back into UTF8. *sigh*
+            # Ideally cef lib is updated to accept a "give me unicode" option.
             msg = unicode(msg, "UTF-8", "replace")
             self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
 
