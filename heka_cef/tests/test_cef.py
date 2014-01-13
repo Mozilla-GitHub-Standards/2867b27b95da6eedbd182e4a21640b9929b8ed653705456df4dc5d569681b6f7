@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ***** BEGIN LICENSE BLOCK *****
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
@@ -16,8 +17,7 @@ import heka_cef
 from heka.tests.helpers import decode_message
 import unittest
 from cef import logger
-from nose.tools import raises, eq_
-from heka_cef.cef_plugin import InvalidArgumentError
+from nose.tools import eq_
 
 
 class TestHeka(unittest.TestCase):
@@ -118,9 +118,12 @@ class TestHeka(unittest.TestCase):
 
     def test_use_of_constant(self):
         content = self._log('xx', 5,
-                signature=heka_cef.AUTH_FAILURE)
+                            signature=heka_cef.AUTH_FAILURE)
         assert '|AuthFail|' in content
 
+    def test_works_with_non_ascii(self):
+        content = self._log('ಠ_ಠ', 5)
+        self.assertTrue(content is not None)
 
 class TestExtraConfig(unittest.TestCase):
 
@@ -155,5 +158,6 @@ class TestExtraConfig(unittest.TestCase):
         client = client_from_text_config(cfg_txt, 'heka')
         expected = {'syslog_priority': '',
                     'syslog_ident': '',
-                    'syslog_facility': 'LOCAL4',}
+                    'syslog_facility': 'LOCAL4',
+                    }
         eq_(client.cef.cef_meta, expected)
