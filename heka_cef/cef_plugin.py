@@ -78,10 +78,14 @@ def config_plugin(config):
         from cef import _get_fields, _format_msg, _filter_params
         config = _filter_params('cef', config)
         fields = _get_fields(name, severity, environ, config,
-                username=username, signature=signature, **kw)
+                             username=username, signature=signature, **kw)
         msg = _format_msg(fields, kw)
 
-        self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
+        try:
+            self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
+        except ValueError:
+            msg = unicode(msg)
+            self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
 
         # Return the formatted message
         return msg
