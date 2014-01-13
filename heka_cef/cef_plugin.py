@@ -84,7 +84,7 @@ def config_plugin(config):
         try:
             self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
         except ValueError:
-            msg = unicode(msg)
+            msg = unicode(msg, "UTF-8", "replace")
             self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
 
         # Return the formatted message
