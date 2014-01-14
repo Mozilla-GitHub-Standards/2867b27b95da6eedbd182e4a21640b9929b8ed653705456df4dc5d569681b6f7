@@ -39,7 +39,7 @@ setup(name='heka-py-cef',
       zip_safe=False,
       install_requires=[
           'heka-py>=0.30.1',
-          'cef>=0.3.1',
+          'cef>=0.5.1',
           ],
       extras_require={
           },

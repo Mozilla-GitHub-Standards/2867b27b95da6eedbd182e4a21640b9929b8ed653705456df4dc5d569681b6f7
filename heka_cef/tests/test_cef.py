@@ -120,6 +120,7 @@ class TestHeka(unittest.TestCase):
         content = self._log('xx', 5,
                             signature=heka_cef.AUTH_FAILURE)
         assert '|AuthFail|' in content
+        self.assertEquals(type(content), unicode)
 
     def test_works_with_non_ascii(self):
         non_ascii = 'ಠ_ಠ'

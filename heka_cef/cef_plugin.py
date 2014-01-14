@@ -14,11 +14,12 @@
 HEKA_METHOD_NAME = 'cef'
 
 VALID_FACILITY = ['KERN', 'USER', 'MAIL', 'DAEMON', 'AUTH', 'LPR',
-'NEWS', 'UUCP', 'CRON', 'LOCAL0', 'LOCAL1', 'LOCAL2', 'LOCAL3',
-'LOCAL4', 'LOCAL5', 'LOCAL6', 'LOCAL7', ]
+                  'NEWS', 'UUCP', 'CRON', 'LOCAL0', 'LOCAL1',
+                  'LOCAL2', 'LOCAL3', 'LOCAL4', 'LOCAL5', 'LOCAL6',
+                  'LOCAL7', ]
 
 VALID_PRIORITY = ['EMERG', 'ALERT', 'CRIT', 'ERR', 'WARNING',
-'NOTICE', 'INFO', 'DEBUG']
+                  'NOTICE', 'INFO', 'DEBUG']
 
 
 class InvalidArgumentError(RuntimeError):
@@ -77,6 +78,7 @@ def config_plugin(config):
         """
         from cef import _get_fields, _format_msg, _filter_params
         config = _filter_params('cef', config)
+        kw['keep_unicode'] = True
         fields = _get_fields(name, severity, environ, config,
                              username=username, signature=signature, **kw)
         msg = _format_msg(fields, kw)
