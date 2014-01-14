@@ -62,7 +62,7 @@ class TestHeka(unittest.TestCase):
         self.client.cef(name, severity, self.environ, self.config, *args, **kw)
         msgs = self.client.stream.msgs
 
-        # Need to strip out protobuf header of 8 bytes
+        # Need to decode the protocol buffer data
         h, msg = decode_message(msgs[0])
 
         msgs.clear()
@@ -122,8 +122,30 @@ class TestHeka(unittest.TestCase):
         assert '|AuthFail|' in content
 
     def test_works_with_non_ascii(self):
-        content = self._log('ಠ_ಠ', 5)
-        self.assertTrue(content is not None)
+        non_ascii = 'ಠ_ಠ'
+        content = self._log(non_ascii, 5)
+        self.assertTrue(non_ascii.decode('utf8') in content)
+        self.assertEquals(type(content), unicode)
+
+    def test_works_with_unicode(self):
+        # This actually tests for both UTF8 encoded unicode strings
+        # and real unicode strings
+        unicode_user = 'Nino Vrane\xc5\xa1i\xc4\x8d'
+
+        unicode_txt = u'\xd0'
+        content1 = self._log(unicode_txt, 5, username=unicode_user)
+
+        self.assertTrue(unicode_txt in content1)
+        self.assertTrue(unicode_user.decode('utf8') in content1)
+        self.assertEquals(type(content1), unicode)
+
+        content2 = self._log(unicode_txt, 5,
+                             username=unicode_user.decode('utf8'))
+        self.assertTrue(unicode_txt in content2)
+        self.assertTrue(unicode_user.decode('utf8') in content2)
+        self.assertEquals(type(content2), unicode)
+        self.assertEquals(content1, content2)
+
 
 class TestExtraConfig(unittest.TestCase):
 
