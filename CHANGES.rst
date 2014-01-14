@@ -1,3 +1,8 @@
+0.3.2 - 2014-01-14
+==================
+
+- Use CEF v0.5.1 which allows CEF messages to be encoded as unicode strings.
+
 0.3.1 - 2014-01-13
 ==================
 
