@@ -78,10 +78,10 @@ def config_plugin(config):
         """
         from cef import _get_fields, _format_msg, _filter_params
         config = _filter_params('cef', config)
-        kw['keep_unicode'] = True
         fields = _get_fields(name, severity, environ, config,
-                             username=username, signature=signature, **kw)
-        msg = _format_msg(fields, kw)
+                             username=username, signature=signature, 
+                             as_unicode=True, **kw)
+        msg = _format_msg(fields, kw, as_unicode=True)
 
         try:
             self.heka(type='cef', payload=msg, fields={'cef_meta': cef_meta})
